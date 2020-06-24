@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gestaoautorizacao
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gestaoautorizacao
+  template:
+    metadata:
+      labels:
+        app: gestaoautorizacao
+    spec:
+      containers:
+        - name: gestaoautorizacao
+          image: diogofilipe7/gestaoautorizacao:latest
+          ports:
+            - containerPort: 3003
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gestaoautorizacao
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/gestaoautorizacao
+spec:
+  clusterIP: 10.99.146.172
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 31808
+    port: 3003
+    protocol: TCP
+    targetPort: 3003
+  selector:
+    app: gestaoautorizacao
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - hostname: localhost
