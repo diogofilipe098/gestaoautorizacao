@@ -14,7 +14,7 @@ exports.create = (req, res) => {
 
     // Create a Emprestimo
     const emprestimo = new Emprestimo({
-        idEmp: req.body.idEmp,
+        _id: req.body._id,
         inicio: req.body.inicio,
         fim: req.body.fim,
         nomeUser: req.body.nomeUser,
